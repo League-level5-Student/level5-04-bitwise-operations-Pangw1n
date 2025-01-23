@@ -54,17 +54,18 @@ package _00_Binary_Conversion;
  */
 public class _03_DecimalToBinary {
     public static void main(String[] args) {
-        System.out.println(" 43 in binary: " + String.format("%32s", convertDecimalToBinary(43)).replace(' ', '0'));
+        System.out.println(" 43 in binary: " + convertDecimalToBinary(43)/*String.format("%32s", convertDecimalToBinary(43)).replace(' ', '0')*/);
         System.out.println("-43 in binary: " + convertDecimalToBinary(-43));
     }
 
     public static String convertDecimalToBinary(int decimalNum) {
         String binaryStr = "";
-
+        boolean negative = decimalNum < 0;
+        decimalNum = Math.abs(decimalNum);
+        
         do {
             // 1. Logical right shift by 1
             int quotient = decimalNum >>> 1;
-
             // 2. Check remainder and add '1' or '0'
             if( decimalNum % 2 != 0 ){
                 binaryStr = '1' + binaryStr;
@@ -77,6 +78,40 @@ public class _03_DecimalToBinary {
             // 3. Repeat until number is 0
         } while( decimalNum != 0 );
 
+        
+        
+        if (negative)
+        {
+        	String temp = "";
+        	for (int i = 0; i < binaryStr.length(); i++)
+        	{
+        		if (binaryStr.charAt(i) == '0')
+        		{
+        			temp += '1';
+        		}
+        		else
+        		{
+        			temp += '0';
+        		}
+        	}
+        	binaryStr = temp;
+        	temp = "";
+        	
+        	for (int i = binaryStr.length() - 1; i >= 0; i--)
+        	{
+        		if (binaryStr.charAt(i) == '1')
+        		{
+        			temp = '0' + temp;
+        		}
+        		else
+        		{
+        			temp = binaryStr.substring(0, i) + '1' + temp;
+        			break;
+        		}
+        	}
+        	binaryStr = temp;
+        }
+        
         return binaryStr;
     }
 }
