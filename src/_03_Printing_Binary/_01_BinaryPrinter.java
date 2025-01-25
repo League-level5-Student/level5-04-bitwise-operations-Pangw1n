@@ -10,37 +10,48 @@ public class _01_BinaryPrinter {
 
     public void printByteBinary(byte b) {
         // We first want to print the bit in the one's place
-
-        // Shift b seven bits to the right
-
-        // Use the & operator to "mask" the bit in the one's place
-        // This can be done by "anding" (&) it with the value of 1
-
-        // Print the result using System.out.print (NOT System.out.println)
-
-        //Use this method to print the remaining 7 bits of b
+    	for (int i = 7; i >= 0; i--)
+    	{
+    		// Shift b seven bits to the right
+    		byte temp = (byte) (b >>> i);
+    		// Use the & operator to "mask" the bit in the one's place
+    		// This can be done by "anding" (&) it with the value of 1
+    		temp = (byte) (temp & 0b00000001);
+    		// Print the result using System.out.print (NOT System.out.println)
+    		System.out.print(temp);
+    		//Use this method to print the remaining 7 bits of b
+    	}
     }
 
     public void printShortBinary(short s) {
         // Create 2 byte variables
-
+    	byte a;
+    	byte b;
         // Use bit shifting and masking (&) to save the first
         // 8 bits of s in one byte, and the second 8 bits of
         // s in the other byte
+    	a = (byte) (s >>> 8);
+    	b = (byte) (s & 0b11111111);
 
         // Call printByteBinary twice using the two bytes
         // Make sure they are in the correct order
+    	printByteBinary(a);
+    	printByteBinary(b);
     }
 
     public void printIntBinary(int i) {
         // Create 2 short variables
-
+    	short a;
+    	short b;
         // Use bit shifting and masking (&) to save the first
         // 16 bits of i in one short, and the second 16 bits of
         // i in the other short
-
+    	a = (short) (i >>> 16);
+    	b = (short) (i & 0b1111111111111111);
         // Call printShortBinary twice using the two short variables
         // Make sure they are in the correct order
+    	printShortBinary(a);
+    	printShortBinary(b);
     }
 
     public void printLongBinary(long l) {
@@ -49,5 +60,11 @@ public class _01_BinaryPrinter {
 
     public static void main(String[] args) {
         // Test your methods here
+    	_01_BinaryPrinter printer = new _01_BinaryPrinter();
+    	printer.printByteBinary((byte) 127);
+    	System.out.println();
+    	printer.printShortBinary((short) 32767);
+    	System.out.println();
+    	printer.printIntBinary(2147483647);
     }
 }

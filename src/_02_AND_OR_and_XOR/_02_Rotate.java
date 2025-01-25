@@ -45,19 +45,18 @@ public class _02_Rotate {
     }
     
     int rotateRight(int value, int rotateAmount) {
-    	System.out.println(Integer.toBinaryString(value));
     	for (int i = 0; i < rotateAmount; i++)
     	{
-    		if ((value < 0 && value % 2 == 1) || (value >= 0 && value % 2 == 0))
+    		if (Math.floorMod(value, 2) == 1)
     		{
-        		value = value >> 1;
+        		value = value >>> 1;
+    			value += 0b10000000000000000000000000000000;
     		}
     		else
     		{
     			value = value >>> 1;
     		}
     	}
-    	System.out.println(value);
     	return value;
     }
     
