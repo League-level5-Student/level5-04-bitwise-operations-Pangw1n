@@ -52,12 +52,42 @@ public class _02_HexadecimalPrinter implements ActionListener {
      * You don't have to handle negative numbers unless you want the challenge!
      */
     String binaryToHex(String binaryStr) {
-    	
-        return "-";
+    	String hexString = "";
+    	for (int i = binaryStr.length() - 1; i >= 0; i -= 4)
+    	{
+    		int decDigit = 0;
+    		for (int j = 0; j < 4 && i - j >= 0; j++)
+    		{
+    			char binDigit = binaryStr.charAt(i - j);
+    			if (binDigit == '1')
+    			{
+    				decDigit += Math.pow(2, j);
+    			}
+    		}
+    		char hexDigit;
+    		if (decDigit >= 10)
+    		{
+    			hexDigit = (char) ('A' + decDigit % 10);
+    		}
+    		else
+    		{
+    			hexDigit = (char) ('0' + decDigit);
+    		}
+    		hexString = hexDigit + hexString;
+    	}
+        return hexString;
     }
     
     String binaryToDec(String binaryStr) {
-        return "-";
+    	int dec = 0;
+    	for (int i = 0; i < binaryStr.length(); i++)
+    	{
+    		if (binaryStr.charAt(binaryStr.length() - (i + 1)) == '1')
+    		{
+    			dec += Math.pow(2, i);
+    		}
+    	}
+        return "" + dec;
     }
 
     /*
@@ -67,8 +97,18 @@ public class _02_HexadecimalPrinter implements ActionListener {
         if (binaryStr.length() != 8) {
             return "-";
         }
-
-        return "-";
+        int bin = 0b00000000;
+        for (int i = 0; i < binaryStr.length(); i++)
+        {
+        	bin = bin << 1;
+        	if (binaryStr.charAt(i) == '1')
+        	{
+        		bin += 1;
+        	}
+        }
+        System.out.println(bin);
+        char ascii = (char) bin;
+        return "" + ascii;
     }
     
     public static void main(String[] args) {
