@@ -56,6 +56,13 @@ public class Base64Decoder {
     //1. Complete this method so that it returns the index in
     //   the base64Chars array that corresponds to the passed in char.
     public static byte convertBase64Char(char c){
+    	for (byte i = 0; i < base64Chars.length; i++)
+    	{
+    		if (c == base64Chars[i])
+    		{
+    			return i;
+    		}
+    	}
         return 0;
     }
 
@@ -63,12 +70,49 @@ public class Base64Decoder {
     //   characters long and return an array of 3 bytes (24 bits). The byte
     //   array should be the binary value of the encoded characters.
     public static byte[] convert4CharsTo24Bits(String s){
-        return null;
+    	byte[] b1 = new byte[3];
+    	char[] c = s.toCharArray();
+    	byte[] b0 = new byte[4];
+    	
+    	for (int i = 0; i < 4; i++)
+    	{
+    		b0[i] = convertBase64Char(c[i]);
+    	}
+    	
+    	b1[0] = (byte) ( (b0[0] << 2) + (b0[1] >> 4) );
+    	b1[1] = (byte) ( (b0[1] << 4) + (b0[2] >> 2) );
+    	b1[2] = (byte) ( (b0[2] << 6) + (b0[3]) );
+        return b1;
     }
 
     //3. Complete this method so that it takes in a string of any length
     //   and returns the full byte array of the decoded base64 characters.
     public static byte[] base64StringToByteArray(String file) {
+    	
+    	int remainderIndex = file.length() - (file.length() % 4);
+    	int newSize = (int) (remainderIndex * (3.0/4.0));
+    	byte[] bytes = new byte[newSize];
+    	
+    	int j = 0;
+    	for (int i = 0; i < remainderIndex; i += 4)
+    	{
+//        	bytes[j] = (byte) ( (b0[i]     << 2) + (b0[i + 1] >> 4) );
+//        	j++;
+//        	bytes[j] = (byte) ( (b0[i + 1] << 4) + (b0[i + 2] >> 2) );
+//        	j++;
+//        	bytes[j] = (byte) ( (b0[i + 2] << 6) + (b0[i + 3]     ) );
+//        	j++;
+    		
+    		byte[] group = convert4CharsTo24Bits(file.substring(i, i + 4));
+    		bytes[j] = group[0];
+    		j++;
+    		bytes[j] = group[1];
+    		j++;
+    		bytes[j] = group[2];
+    		j++;
+    	}
+    	
+    	// TODO: implement remainders
         return null;
     }
 }
