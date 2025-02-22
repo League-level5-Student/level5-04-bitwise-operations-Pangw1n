@@ -89,12 +89,11 @@ public class Base64Decoder {
     //   and returns the full byte array of the decoded base64 characters.
     public static byte[] base64StringToByteArray(String file) {
     	
-    	int remainderIndex = file.length() - (file.length() % 4);
-    	int newSize = (int) (remainderIndex * (3.0/4.0));
+    	int newSize = (int) (file.length() * (3.0/4.0));
     	byte[] bytes = new byte[newSize];
     	
     	int j = 0;
-    	for (int i = 0; i < remainderIndex; i += 4)
+    	for (int i = 0; i < file.length(); i += 4)
     	{
 //        	bytes[j] = (byte) ( (b0[i]     << 2) + (b0[i + 1] >> 4) );
 //        	j++;
@@ -111,8 +110,7 @@ public class Base64Decoder {
     		bytes[j] = group[2];
     		j++;
     	}
-    	
     	// TODO: implement remainders
-        return null;
+        return bytes;
     }
 }
